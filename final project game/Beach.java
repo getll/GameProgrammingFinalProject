@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Beach extends World
 {
-
+    GreenfootSound bMusic = new GreenfootSound("creepy beach song.wav");
     /**
      * Constructor for objects of class Beach.
      * 
@@ -30,4 +30,16 @@ public class Beach extends World
         Player player = new Player();
         addObject(player,705,528);
     }
+    public void act()
+    {
+        bMusic.play();
+    }
+    public void started()
+    {
+        bMusic.playLoop();
+    }
+    public void stopped()
+    {
+        bMusic.stop();
+    }   
 }
