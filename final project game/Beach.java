@@ -16,6 +16,7 @@ public class Beach extends World
     public Beach()
     {
         super(900, 600, 1);
+        setBackground(new GreenfootImage("Beach.png"));
         prepare();
     }
 

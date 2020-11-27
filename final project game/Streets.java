@@ -17,6 +17,7 @@ public class Streets extends World
     public Streets()
     {
         super(900, 600, 1);
+        setBackground(new GreenfootImage("Streets.png"));
         prepare();
         
     }

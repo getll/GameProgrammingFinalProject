@@ -16,6 +16,7 @@ public class Forest extends World
     public Forest()
     {
         super(900, 600, 1);
+        setBackground(new GreenfootImage("Forest.png"));
         prepare();
     }
 
