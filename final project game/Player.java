@@ -10,22 +10,31 @@ public class Player extends Actor
 {
     private int firingRate = 20;
     private int firingCounter = 0;
-    private final int grav = 1;
-    private int velocity = 4;
+    
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    private final int gravity=1;
+    private int velocity;
     public Player(){
-        velocity = 0;
+        velocity=0;
     }
     public void act() 
     {
         move();
         shoot();
         fall();
-        if (Greenfoot.isKeyDown("j") && getY() > getWorld().getHeight() -30) jump();
-    } 
+        if(Greenfoot.isKeyDown("space")&& isOnSolidGround() )jump();
+    }
+    public void fall(){
+        setLocation(getX(),getY()+velocity);
+        if(isOnSolidGround()) velocity=0;
+        else velocity+=gravity;
+    }
+    public void jump(){
+        velocity=-10;
+    }
     public void move() {
         if (Greenfoot.isKeyDown("a")) {
             move(-4);
@@ -33,13 +42,14 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             move(4);
         }
-        if (Greenfoot.isKeyDown("j")){
-            jump();
-        }    
+        if(Greenfoot.isKeyDown("space"))
+        {
+            
+        }
     }
     
     public void shoot() {
-        if (Greenfoot.isKeyDown("space")) {
+        if (Greenfoot.isKeyDown("f")) {
             firingCounter++;
             if (firingCounter == firingRate) {
                 World world = getWorld();
@@ -48,12 +58,24 @@ public class Player extends Actor
             }
         }
     }
-    public void jump(){
-     velocity=-10;   
+    public boolean isOnSolidGround(){
+      boolean isOnGround=false;
+      int imageWidth=getImage().getWidth();
+      int imageHeight=getImage().getHeight();
+      if(getOneObjectAtOffset(imageWidth/-2,imageHeight/2,floor.class)!=null ||
+         getOneObjectAtOffset(imageWidth/2,imageHeight/2,floor.class)!=null)
+        isOnGround=true; 
+      if(getOneObjectAtOffset(imageWidth/-2,imageHeight/2,floor2.class)!=null ||
+         getOneObjectAtOffset(imageWidth/2,imageHeight/2,floor2.class)!=null)
+        isOnGround=true; 
+      if(getOneObjectAtOffset(imageWidth/-2,imageHeight/2,stairs.class)!=null ||
+         getOneObjectAtOffset(imageWidth/2,imageHeight/2,stairs.class)!=null)
+        isOnGround=true;
+      if(getOneObjectAtOffset(imageWidth/-2,imageHeight/2,floor3.class)!=null ||
+         getOneObjectAtOffset(imageWidth/2,imageHeight/2,floor3.class)!=null)
+        isOnGround=true;
+      if(getY()> getWorld().getHeight()- 30) isOnGround=true;
+      return isOnGround;
+      
     }    
-    public void fall(){
-        setLocation(getX(),getY() + velocity);
-        if (getY() > getWorld().getHeight() - 30) velocity = 0;
-        else velocity += grav;
-    }
 }
